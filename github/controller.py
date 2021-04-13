@@ -20,7 +20,7 @@ class ReportController:
             return
         return repos
 
-    def make(self) -> None:
+    def make(self) -> Union[list, None]:
         data = []
         repos = self.get_repos_meta()
         if repos is None:
