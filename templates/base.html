@@ -1,0 +1,22 @@
+<form action="/github/" method="post">
+    {% csrf_token %}
+    <label for="username">Github name: </label>
+    <input id="username" type="text" name="username" value="{{ username }}">
+    <input type="submit" value="OK">
+</form>
+{% for project in data %}
+    <li> Название проекта: {{ project.name_project }}<br/>
+    Ссылка на проект на Гитхабе: {{ project.url }}<br/>
+    Количество звёзд на Гитхабе: {{ project.stargazers_count }}<br/>
+
+    {% for pr in project.open %}
+        Ссылки на не смерженные пул-реквесты от пользователя: {{ project.url }}<br/>
+        Количество комментариев: {{ pr.cnt_comments }}<br/>
+    {% endfor %}
+
+    {% for pr in project.close %}
+        Ссылки на смерженные пул-реквесты от пользователя: {{ project.url }}<br/>
+        Количество комментариев: {{ pr.cnt_comments }}
+    {% endfor %}</li>
+
+{% endfor %}
