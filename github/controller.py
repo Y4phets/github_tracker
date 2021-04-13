@@ -29,23 +29,24 @@ class ReportController:
 
         for repo in repos:
             full_name = repo['full_name']
+            owner = repo['repo']['login']
             prs = self.sdk.get_pull_requests(repo['full_name'])
             list_pr = [pr for pr in prs if pr['user']['login'] == self.username]
-            sys.stdout.write(f"Open pull requests: \n")
+            sys.stdout.write(f'Open pull requests: \n')
             if list_pr:
-                data.append({"name_project": full_name,
-                             "url": repo['url'],
+                data.append({'name_project': full_name,
+                             'url': repo['url'],
                              'stargazers_count': repo['stargazers_count'],
                              'open': [
-                                 {"url": i['url'],
-                                  "cnt_comments": self.sdk.get_count_comments(self.username, i["number"])}
-                                 for i in
+                                 {'url': pr['url'],
+                                  'cnt_comments': self.sdk.get_count_comments(owner, pr['number'])}
+                                 for pr in
                                  list_pr if
-                                 i['state'] == "open"],
+                                 pr['state'] == 'open'],
                              'close': [
-                                 {"url": i['url'],
-                                  "cnt_comments": self.sdk.get_count_comments(self.username, i["number"])}
-                                 for i in
+                                 {'url': pr['url'],
+                                  'cnt_comments': self.sdk.get_count_comments(owner, pr['number'])}
+                                 for pr in
                                  list_pr
-                                 if i['state'] == "closed"]})
+                                 if pr['state'] == 'closed']})
         return data
