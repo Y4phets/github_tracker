@@ -1,10 +1,7 @@
-import requests
 from django.http import JsonResponse
 from django.shortcuts import render
-
-from github.forms import GithubForm
-
 from github.controller import ReportController
+from github.forms import GithubForm
 from github.sdk import GitHubApiSdk
 
 
