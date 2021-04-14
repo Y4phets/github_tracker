@@ -1,7 +1,7 @@
 import os
 import time
 from datetime import datetime
-from typing import Iterable, Union
+from typing import Union
 
 import requests
 from github.retry import retry
@@ -65,11 +65,11 @@ class GitHubApiSdk:
             return self.request(url, options)
         return response.json()
 
-    def get_repos(self, url) -> Union[dict, None]:
+    def get_repos(self, url: str) -> Union[dict, None]:
         data = self.request(self.get_absolute_path(f'users/{url}/repos'), options={'type': 'all'})
         return data
 
-    def get_pull_requests(self, url: str) -> Iterable:
+    def get_pull_requests(self, url: str) -> Union[str, list]:
         params = {'per_page': self.PAGE_SIZE,
                   'state': 'all',
                   'sort': 'created'}
